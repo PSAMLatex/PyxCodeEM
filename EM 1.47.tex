@@ -1,0 +1,137 @@
+\documentclass[12pt, oneside]{article}   	% use "amsart" instead of "article" for AMSLaTeX format
+\usepackage{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   		% ... or a4paper or a5paper or ... 
+%\geometry{landscape}                		% Activate for rotated page geometry
+%\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}				% Use pdf, png, jpg, or eps§ with pdflatex; use eps in DVI mode
+								% TeX will automatically convert eps --> pdf in pdflatex		
+\usepackage{amssymb, amsmath}
+
+\usepackage{datetime2}	
+\DTMsetdatestyle{mdyy}
+\DTMsetup{datesep=/}
+
+%SetFonts
+\usepackage[sc,slantedGreek]{mathpazo}
+%SetFonts
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{PSAM Week One Solution to Griffiths 1.47 by Pyxie Star | Page \thepage}
+\lhead{\today}
+\renewcommand{\headrulewidth}{1pt}
+
+
+\begin{document}
+
+\paragraph*{\textbf{1.47 a) Write an expression for the volume charge density $\rho(\vec{r})$ of a point charge $q$ at $\vec{r'}$. Make sure that the volume integral of $\rho$ equals $q$.}}
+
+\paragraph{}So what we want is $\rho(\vec{r})$ such that the volume integral over a region that contains $\vec{r'}$ (and thus the point charge) is equal to $q$ but over a region that does not contain $\vec{r'}$ is equal to 0. That is:
+
+\[ \int\limits_{region}\rho(\vec{r})d\tau=\left\{\begin{array} {ll}
+q &\mbox{ if region contains }\vec{r'}\\
+0&\mbox{ if region does not contain }\vec{r'}\end{array}\right.\]
+
+Sounds like the perfect opportunity for a Delta Dirac Function!!!
+
+The location of the spike must be at $\vec{r'}$ so that the delta function goes to zero everywhere else. So let 
+\begin{equation}\label{1}
+\rho(\vec{r})=k\delta^3(\vec{r}-\vec{r'})
+\end{equation}
+ where $k$ is some constant.
+
+It is given that the volume integral over all space must be equal to $q$, and that can be used to find $k$.
+\begin{equation}
+\begin{split}
+q&=\int\limits_{\substack{all\\space}}\rho(\vec{r})d\tau\\
+&=\int\limits_{\substack{all\\space}}k\delta^3(\vec{r}-\vec{r'})d\tau\\
+&=k\int\limits_{\substack{all\\space}}\delta^3(\vec{r}-\vec{r'})d\tau\\
+&=k
+\end{split}
+\end{equation}
+
+Substituting this result into Eq\eqref{1} gives
+$\boxed{\rho(\vec{r})=q\delta^3(\vec{r}-\vec{r'})}$. Also, it is possible to show that the integral $ \int\limits_{region}q\delta^3(\vec{r}-\vec{r'})d\tau$ fulfills the requirements given above for $\int\limits_{region}\rho(\vec{r})d\tau$.
+
+\paragraph*{\textbf{b) What is the volume density charge of an electric dipole, consisting of a point charge $-q$ at the origin and a point charge $+q$ at $\vec{a}$?}}
+
+\begin{center}
+\includegraphics[width=50mm]{Slide1.jpg}
+\end{center}
+
+In this case the output of the volume integral of $\rho({\vec{r}})$ depends on both $\vec{0}$ and $\vec{a}$. 
+
+\[ \int\limits_{region}\rho(\vec{r})=\left\{\begin{array} {cl}
+0 &\mbox{ if region contains neither }\vec{0} \mbox{ or }\vec{a}\\
+q&\mbox{ if region contains }\vec{a}\mbox{ but not }\vec{0}\\
+-q&\mbox{ if region contains }\vec{0}\mbox{ but not }\vec{a}\\
+q-q&\mbox{ if region contains both }\vec{0} \mbox{ and }\vec{a}\end{array}\right.\]
+
+There must be two delta functions, one with a spike at $\vec{0}$ and one with a spike at $\vec{a}$, so $p(r)$ contains both $\delta^3(\vec{r})$ and $\delta^3(\vec{r}-\vec{a})$. We can make the guess that $\rho({\vec{r}})$ a linear combination of the two delta functions:
+
+\begin{equation}
+\rho({\vec{r}}) =k_1\delta^3(\vec{r})+k_2\delta^3(\vec{r}-\vec{a})
+\end{equation}
+where $k_1$ and $k_2$ are constants.
+
+By looking at the volume integral of this $\rho(\vec{r})$ over some region it is possible to determine if there are values of $k_1$ and $k_2$ such that the above requirements are satisfied.
+
+\begin{equation}
+\begin{split}
+\int\limits_{region}\rho(\vec{r})d\tau&=\int\limits_{region}[k_1\delta^3(\vec{r})+k_2\delta^3(\vec{r}-\vec{a})]d\tau\\
+&=\int\limits_{region}k_1\delta^3(\vec{r})d\tau+\int\limits_{region}k_2\delta^3(\vec{r}-\vec{a})d\tau\\
+&=k_1\int\limits_{region}\delta^3(\vec{r})d\tau+k_2\int\limits_{region}\delta^3(\vec{r}-\vec{a})d\tau
+\end{split}
+\end{equation}
+
+If the region contains $\vec{a}$ and not $\vec{0}$ then the first delta function integral will be equal to zero and the second will be equal to one. Then $\int\limits_{region}\rho(\vec{r})d\tau=k_2$. From above, in this case $\int\limits_{region}\rho(\vec{r})d\tau$ should equal $q$, so 
+\begin{equation}
+k_2=q
+\end{equation}
+will satisfy the requirement. By a similar argument 
+\begin{equation}
+k_1=-q.
+\end{equation}
+Also, setting $k_1=-q$ and $k_2=q$ gives $q-q$ for the integral of $\rho(\vec{r})$ over all space, as required.
+
+So to satisfy the volume integral conditions $\boxed{\rho({\vec{r}}) =-q\delta^3(\vec{r})+q\delta^3(\vec{r}-\vec{a})}$.
+\paragraph*{\textbf{c) What is the volume charge density (in spherical coordinates) of a uniform, infinitesimally thin spherical shell of radius $R$ and total charge $Q$, centered at the origin? [\emph{Beware}: the integral over all space must equal $Q$.]}}
+
+\begin{center}
+\includegraphics[width=60mm]{Slide2.jpg}
+\end{center}
+
+The volume charge density is in spherical coordinates but actually depends only on $r$. This is because while $\theta$ and $\phi$ determine what fraction of the spherical shell may be contained in the region, the value of $r$ determines whether or not the spherical shell is within the region at all. That is, the volume integral of $\rho(r)$ over any region defined by $\theta$ and $\phi$ will be zero if $r<R$ and nonzero if $r\geq R$. Therefore $\rho(r)$ must involve a delta function with a spike at $r=R$.
+
+\begin{equation}
+\rho(r)=k\delta(r-R)
+\end{equation}
+\pagebreak
+
+The fact that the integral over all space must equal $Q$ can be used to solve for $k$.
+
+\begin{equation}
+\begin{split}
+Q&=\int\limits_{\substack{all\\space}}\rho(r)d\tau\\
+&=\int_0^\infty\int_0^\pi\int_0^{2\pi}k\delta(r-R)r^2sin\theta d\phi d\theta dr\\
+&=\int_0^\infty kr^2\delta(r-R) dr\left(\int_0^\pi sin\theta d\theta\right)\left(\int_0^{2\pi} d\phi\right)\\
+&=\int_0^\infty kr^2 \delta(r-R)dr\left(-cos\theta\big\vert_0^\pi \right)\left(\phi\big\vert_0^{2\pi}\right)\\
+&=\int_0^\infty kr^2\delta(r-R) dr\left(-[-1-1]\right)(2\pi)\\
+&=\int_0^\infty k4\pi r^2\delta(r-R) dr\\
+&=k4\pi R^2
+\end{split}
+\end{equation}
+
+The last step comes from the fact that $\int\limits_{all \,space} f(x)\delta(x-a)d\tau=f(a)$. 
+
+Solving $Q=k4\pi R^2$ for $k$ gives
+
+\begin{equation}
+k=\frac{Q}{4\pi R^2}
+\end{equation}
+and
+\begin{equation}
+\boxed{ \rho(r)=\frac{Q}{4\pi R^2}\delta(r-R)}
+\end{equation}
+
+\end{document}  
